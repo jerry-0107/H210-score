@@ -53,7 +53,7 @@ export default function TopBar({ logined, title, data, needCheckLogin }) {
   };
 
   React.useEffect(() => {
-    document.title = title + " - H210成績查詢系統"
+    document.title = title + " - H310成績查詢系統"
   }, [title])
 
   return (

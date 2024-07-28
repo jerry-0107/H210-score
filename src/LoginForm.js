@@ -82,7 +82,7 @@ function LoginForm({ set, callback }) {
     setShowDialog(true)
   }
   React.useEffect(() => {
-    document.title = "登入 - H210成績查詢系統"
+    document.title = "登入 - H310成績查詢系統"
     fetch(
       '/api/service/annoucement', {
       method: 'POST',
@@ -145,7 +145,7 @@ function LoginForm({ set, callback }) {
               {serverAnnouncement.action == "not_allow_login" || serverAnnouncement.title == "連線中..." ?
                 <>
 
-                  <h2 style={{ margin: 0 }}>H210<br />成績查詢系統</h2>
+                  <h2 style={{ margin: 0 }}>H310<br />成績查詢系統</h2>
 
                   <p></p>
 

@@ -31,9 +31,9 @@ export function Setting({ data, user, handleError }) {
                 <Paper sx={{ p: 2 }}>
                     <h2>關於</h2>
                     <code>
-                        成績查詢系統 v1.0
+                        H310 成績查詢系統 v1.0
                         BY Jerry <br />
-                        2024.01<br />
+                        2024.08<br />
                         SVG Background by <Button component="a" target="_blank" href="https://bgjar.com" variant="text">BGJar</Button>
                     </code>
                 </Paper>

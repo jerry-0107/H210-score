@@ -465,7 +465,7 @@ export function TeacherScore({ data, user, handleError }) {
               <TextField type='text'
                 InputProps={{
                   readOnly: true,
-                }} sx={{ width: "100%" }} variant="standard" value={`https://h210-score-production.up.railway.app/score/?q=${UrlParam("q")}`} />
+                }} sx={{ width: "100%" }} variant="standard" value={`https://H310-score-production.up.railway.app/score/?q=${UrlParam("q")}`} />
             </p>
             <p>以下是自動生成的描述:<br />
               <TextField
@@ -474,7 +474,7 @@ export function TeacherScore({ data, user, handleError }) {
                 InputProps={{
                   readOnly: true,
                 }}
-                type='text' sx={{ width: "100%" }} variant="standard" value={`各位家長好，${scoreSetting.scoreName} 的成績已經開放查詢，網址如下:\nhttps://h210-score-production.up.railway.app/score/?q=${UrlParam("q")}\n帳號是P加孩子的學號，預設密碼是孩子的學號\n*查詢時如遇系統壅塞，請耐心等候*`} />
+                type='text' sx={{ width: "100%" }} variant="standard" value={`各位家長好，${scoreSetting.scoreName} 的成績已經開放查詢，網址如下:\nhttps://H310-score-production.up.railway.app/score/?q=${UrlParam("q")}\n帳號是P加孩子的學號，預設密碼是孩子的學號\n*查詢時如遇系統壅塞，請耐心等候*`} />
             </p>
           </DialogContentText>
         </DialogContent>

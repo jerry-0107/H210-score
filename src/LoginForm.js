@@ -73,7 +73,7 @@ function LoginForm({ set, callback }) {
     setShowDialog(true)
   }
   React.useEffect(() => {
-    document.title = "登入 - H210成績查詢系統"
+    document.title = "登入 - H310成績查詢系統"
     fetch(
       '/api/service/annoucement', {
       method: 'POST',
@@ -136,7 +136,7 @@ function LoginForm({ set, callback }) {
               {serverAnnouncement.action == "not_allow_login" || serverAnnouncement.title == "連線中..." ?
                 <>
 
-                  <h2 style={{ margin: 0 }}>H210<br />成績查詢系統</h2>
+                  <h2 style={{ margin: 0 }}>H310<br />成績查詢系統</h2>
 
                   <p></p>
 
@@ -157,7 +157,7 @@ function LoginForm({ set, callback }) {
                       {serverAnnouncement.title}
                     </Alert></div>
 
-                  <h1 style={{ margin: 0 }}>H210 </h1>
+                  <h1 style={{ margin: 0 }}>H310 </h1>
                   <h2 style={{ marginTop: 0 }}>成績查詢系統</h2>
                   <TextField type='text' value={userid} id="userid-input" label="帳號" variant="standard" onChange={(e) => setuserid(e.target.value)} />
                   <p></p>
@@ -192,7 +192,7 @@ function LoginForm({ set, callback }) {
                   {serverAnnouncement.title}
                 </Alert></div>
 
-              <h1 style={{ margin: 0 }}>H210</h1>
+              <h1 style={{ margin: 0 }}>H310</h1>
               <h2 style={{ marginTop: 0 }}>成績查詢系統</h2>
             </center>
         }

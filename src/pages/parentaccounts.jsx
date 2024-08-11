@@ -103,7 +103,6 @@ export function ParentAccounts({ data, user, handleError }) {
     };
 
     const handleSubmit = () => {
-        // 在這裡處理提交操作，您可以使用inputValues數組中的值
 
     };
 

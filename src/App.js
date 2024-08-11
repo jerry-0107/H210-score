@@ -19,13 +19,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Setting } from './pages/setting';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { StdScore } from './pages/stdscore';
 import Routing from './pages/route';
-import { ParentAccountMonitor } from './pages/parentAccountMonitor';
-
-import { socket } from './socket';
 import { ErrorPage } from './pages/errorPage';
-import { StdMore } from './pages/stdmore';
 
 function App() {
   const [loading, setLoading] = React.useState(true)
@@ -80,36 +75,12 @@ function App() {
       .then(res => {
         setLoading(false)
 
-        if (res.logined) {
-          setIsLoggedIn(res.logined)
+        if (res.loggedIn) {
+          setIsLoggedIn(res.loggedIn)
           setUserData(res.data)
         }
-
-
       })
   }, [])
-
-
-  // React.useEffect(() => {
-
-  //   const onConnect = () => {
-  //     console.log("connected")
-  //   }
-  //   const onDisconnect = () => {
-  //     console.log("disconnected")
-  //   }
-  //   socket.connect()
-
-  //   socket.on('connect', onConnect);
-  //   socket.on('disconnect', onDisconnect);
-
-
-  //   return () => {
-  //     socket.off('connect', onConnect);
-  //     socket.off('disconnect', onDisconnect);
-  //   };
-  // })
-
 
   return (
     <ThemeProvider theme={currentTheme}>
@@ -128,12 +99,7 @@ function App() {
                   <Route path='/' element={<TeacherHomePage data={userData} handleError={setPageError} />} ></Route>
                   : <Route path='/' element={<Homepage data={userData} handleError={setPageError} />} ></Route>
                 }
-                {/* {userData.data.role === "std" ?
-                  <>
-                    <Route path='/more' element={<StdMore data={userData} handleError={setPageError} />} ></Route>
-                    <Route path='/score/more' element={<StdScore data={userData} handleError={setPageError} />} ></Route>
-                    <Route path='/parentaccount' element={<ParentAccountMonitor data={userData} handleError={setPageError} />} ></Route>
-                  </> : <></>} */}
+
 
                 {
                   userData.data.role !== "teacher" ?

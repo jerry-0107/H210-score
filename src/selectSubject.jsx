@@ -38,7 +38,7 @@ export default function SelectSubject({ onChangeFunc, params, defaultValue, labe
         freeSolo
         onChange={(e, value, situation, option) => {
           if (situation === "removeOption") {
-            // console.log("--->", e, value, situation, option);
+
           }
           setReceivers((state) => value);
           if (params) {

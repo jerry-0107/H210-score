@@ -6,25 +6,18 @@ import { useLocation } from "react-router-dom";
 import TopBar from '../Topbar'
 
 export default function Routing({ data, user, handleError }) {
-    function UrlParam(name) {
-        var url = new URL(window.location.href),
-            result = url.searchParams.get(name);
-        return result
-    }
+
     var theLoc = (window.location.pathname.replace("/route/to", "") + window.location.search)
     const linkRef = React.useRef(null)
-    const [message, setMessage] = React.useState(<></>)
-    const [title, setTitle] = React.useState("正在重新導向")
     const location = useLocation();
     React.useEffect(() => {
         if (linkRef.current) {
             linkRef.current.click()
         }
-        console.log(location)
     }, [linkRef])
     return (
         <>
-            <TopBar logined={true} data={data.data} user={user} title={"正在重新導向..."} needCheckLogin={false} />
+            <TopBar loggedIn={true} data={data.data} user={user} title={"正在重新導向..."} needCheckLogin={false} />
 
             <Box sx={{ p: 3, overflow: "hidden" }}>
                 正在將你重新導向到:

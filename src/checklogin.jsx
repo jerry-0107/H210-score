@@ -1,10 +1,7 @@
 import * as React from 'react'
-import { ErrorPage } from './pages/errorPage'
 
 export function CheckLogin({ run, userData }) {
-    const [pageError, setPageError] = React.useState([false, 0])
 
-    const [ui, setUi] = React.useState(<></>)
     React.useEffect(() => {
         if (run && !window.location.href.includes("/route/to")) {
             fetch("/api/checklogin", {
@@ -18,7 +15,7 @@ export function CheckLogin({ run, userData }) {
             })
                 .then(res => res.json())
                 .then(res => {
-                    if (!res.logined) {
+                    if (!res.loggedIn) {
                         alert("請重新登入")
                         window.location.reload()
                     }
@@ -27,5 +24,5 @@ export function CheckLogin({ run, userData }) {
         }
     }, [])
 
-    return <>{ui}</>
+    return <></>
 }

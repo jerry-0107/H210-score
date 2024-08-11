@@ -23,9 +23,6 @@ export function Profile({ data, user, handleError }) {
     return result
   }
 
-  React.useEffect(() => {
-    console.log(user, data)
-  }, [])
 
   function resetPassword() {
     if (newPassword !== confirmNewPassword) {
@@ -79,7 +76,7 @@ export function Profile({ data, user, handleError }) {
     <>
 
 
-      <TopBar needCheckLogin={true} logined={true} data={data.data} user={user} title={"個人資料"} />
+      <TopBar needCheckLogin={true} loggedIn={true} data={data.data} user={user} title={"個人資料"} />
 
       <Box sx={{ p: 3 }}>
         <Paper sx={{ p: 2 }}>

@@ -12,17 +12,11 @@ import { useRef } from 'react';
 import "../src/app.css"
 import ReCAPTCHA from "react-google-recaptcha";
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { AlertDialog } from './alertDialog';
 import dayjs from 'dayjs';
 
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import GoogleLoginBtn from './googleLogin';
 import LinearProgress from '@mui/material/LinearProgress';
-
-import SyncAltIcon from '@mui/icons-material/SyncAlt';
-import ConstructionIcon from '@mui/icons-material/Construction';
 function LoginForm({ set, callback }) {
-  const [userid, setuserid] = useState(localStorage.getItem("loginedUserid") ? localStorage.getItem("loginedUserid") : "");
+  const [userid, setuserid] = useState(localStorage.getItem("loggedInUserid") ? localStorage.getItem("loggedInUserid") : "");
   const [password, setPassword] = useState('');
   const [showDialog, setShowDialog] = useState(false)
   const [showDialog2, setShowDialog2] = useState(false)
@@ -58,15 +52,12 @@ function LoginForm({ set, callback }) {
       .then(
         (res) => {
           if (res.ok) {
-            //alert("登入成功")
             set(true)
-            localStorage.setItem("loginedUserid", userid)
+            localStorage.setItem("loggedInUserid", userid)
             callback(res)
-            //window.location.reload()
           } else {
             alert(res.message)
             window.location.reload()
-            // AlertDialog({ title: "登入失敗", message: res.message })
           }
         }
       )
@@ -82,7 +73,7 @@ function LoginForm({ set, callback }) {
     setShowDialog(true)
   }
   React.useEffect(() => {
-    document.title = "登入 - H310成績查詢系統"
+    document.title = "登入 - H210成績查詢系統"
     fetch(
       '/api/service/annoucement', {
       method: 'POST',
@@ -93,9 +84,9 @@ function LoginForm({ set, callback }) {
     }
     ).then(res => res.json())
       .then(res => {
-        console.log(res)
+
         setServerAnnouncement(res)
-        console.log("serverAnnouncement updated")
+
         if (res.title !== "null" && res.title !== null) {
           if (res.action.includes("dialog")) {
             setShowDialog2(true)
@@ -145,7 +136,7 @@ function LoginForm({ set, callback }) {
               {serverAnnouncement.action == "not_allow_login" || serverAnnouncement.title == "連線中..." ?
                 <>
 
-                  <h2 style={{ margin: 0 }}>H310<br />成績查詢系統</h2>
+                  <h2 style={{ margin: 0 }}>H210<br />成績查詢系統</h2>
 
                   <p></p>
 
@@ -166,7 +157,7 @@ function LoginForm({ set, callback }) {
                       {serverAnnouncement.title}
                     </Alert></div>
 
-                  <h1 style={{ margin: 0 }}>H310 </h1>
+                  <h1 style={{ margin: 0 }}>H210 </h1>
                   <h2 style={{ marginTop: 0 }}>成績查詢系統</h2>
                   <TextField type='text' value={userid} id="userid-input" label="帳號" variant="standard" onChange={(e) => setuserid(e.target.value)} />
                   <p></p>
@@ -201,20 +192,8 @@ function LoginForm({ set, callback }) {
                   {serverAnnouncement.title}
                 </Alert></div>
 
-              <h1 style={{ margin: 0 }}>H310</h1>
+              <h1 style={{ margin: 0 }}>H210</h1>
               <h2 style={{ marginTop: 0 }}>成績查詢系統</h2>
-
-
-              {/* <p>
-                <Alert severity="info">目前僅學生帳號可使用學校Gmail信箱登入，未來將開放所有使用者綁定個人信箱</Alert>
-                <p></p>
-                <GoogleOAuthProvider clientId="1048282007741-hhr4o66b1u5n38gevv17lp8s4vlu31vp.apps.googleusercontent.com">
-                  <GoogleLoginBtn set={set} callback={callback} />
-                </GoogleOAuthProvider>
-                <p></p>
-                <Button variant="text" size="small" onClick={() => { setLoginType(loginType == "password" ? "Google" : "password") }}><SyncAltIcon /> 使用{loginType == "password" ? "Google" : "帳號密碼"}登入</Button>
-
-              </p> */}
             </center>
         }
 

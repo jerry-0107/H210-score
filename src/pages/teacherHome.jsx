@@ -26,7 +26,7 @@ export function TeacherHomePage({ data, user, handleError }) {
     return (
         <>
 
-            <TopBar needCheckLogin={true} logined={true} data={data.data} user={user} title={"教師後臺"} />
+            <TopBar needCheckLogin={true} loggedIn={true} data={data.data} user={user} title={"教師後臺"} />
             <Box sx={{ p: 3 }}>
                 <h1>教師後臺</h1>
                 <Grid container spacing={2} >

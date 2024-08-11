@@ -50,14 +50,6 @@ export function StudentAccounts({ data, user, handleError }) {
                 prefersDarkMode ? "dark" : "light"
     )
 
-    /*const handleInputChange = (index, value) => {
-      console.log(index, value, "000151656464")
-      var updatedValues = [...];
-      updatedValues[index] = value;
-      console.log(updatedValues[index])
-      console.log(inputValues, updatedValues)
-      (updatedValues);
-    };*/
     const [open, setOpen] = React.useState(false);
     const [openingId, setOpeningId] = React.useState(0)
 
@@ -139,16 +131,15 @@ export function StudentAccounts({ data, user, handleError }) {
 
     function getAllStdPass() {
         fetch("/api/getallstudents", {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({}),
+
         })
             .then(res => res.json())
             .then(res => {
                 if (res.ok) {
-                    console.log(".......0", res)
                     var list = []
                     for (let i = 0; i < res.data.result.length; i++) {
                         if (res.data.result[i].userid.includes("s")) {
@@ -212,7 +203,7 @@ export function StudentAccounts({ data, user, handleError }) {
                 <p></p>
                 <ReCAPTCHA
                     sitekey="6LeoWJ0oAAAAAN9LRkvYIdq3uenaZ6xENqSPLr9_"
-                    onChange={e => { console.log(e); setRecaptcha(e) }}
+                    onChange={e => { setRecaptcha(e) }}
                     theme={theme}
                 />
                 <p>
@@ -223,7 +214,7 @@ export function StudentAccounts({ data, user, handleError }) {
             </Box>
 
 
-            <TopBar needCheckLogin={true} logined={true} data={data.data} user={user} title={"學生帳密"} />
+            <TopBar needCheckLogin={true} loggedIn={true} data={data.data} user={user} title={"學生帳密"} />
 
             <Box sx={{ p: 3 }}>
                 <h1>所有學生的帳號密碼</h1>

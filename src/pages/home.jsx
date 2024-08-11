@@ -8,8 +8,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
-import Tabs from '../tabs';
-import ScoreTabs from '../tabs';
+import Tabs from '../scoreList';
+import ScoreTabs from '../scoreList';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -29,7 +29,7 @@ export function Homepage({ user, data, handleError }) {
 
   function getScore() {
     setLoading(true)
-    fetch("/api/getscore", {
+    fetch("/api/connection/test", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ export function Homepage({ user, data, handleError }) {
 
   return (
     <>
-      <TopBar needCheckLogin={true} logined={true} data={data.data} user={user} title={"首頁"} />
+      <TopBar needCheckLogin={true} loggedIn={true} data={data.data} user={user} title={"首頁"} />
       <Box sx={{ p: 3 }}>
         {/* {data.data.role === "std" ? <><Alert
           action={

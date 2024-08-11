@@ -14,7 +14,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ScoreTabs from '../tabs';
+import ScoreTabs from '../scoreList';
 
 export function SearchScoreSheet({ data, user, handleError }) {
 
@@ -70,7 +70,7 @@ export function SearchScoreSheet({ data, user, handleError }) {
 
 	return (
 		<>
-			<TopBar needCheckLogin={true} logined={true} data={data.data} user={user} title={"成績管理"} />
+			<TopBar needCheckLogin={true} loggedIn={true} data={data.data} user={user} title={"成績管理"} />
 			<Box sx={{ p: 3 }}>
 				<h1>所有成績</h1>
 				{scoreTab}

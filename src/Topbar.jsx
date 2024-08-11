@@ -16,8 +16,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import { CheckLogin } from './checklogin';
 import { Link } from "react-router-dom"
 
-export default function TopBar({ logined, title, data, needCheckLogin }) {
-  const [auth, setAuth] = React.useState(logined);
+export default function TopBar({ loggedIn, title, data, needCheckLogin }) {
+  const [auth, setAuth] = React.useState(loggedIn);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleChange = (event) => {
@@ -53,7 +53,7 @@ export default function TopBar({ logined, title, data, needCheckLogin }) {
   };
 
   React.useEffect(() => {
-    document.title = title + " - H310成績查詢系統"
+    document.title = title + " - H210成績查詢系統"
   }, [title])
 
   return (
@@ -98,8 +98,6 @@ export default function TopBar({ logined, title, data, needCheckLogin }) {
                 >
                   <MenuItem onClick={() => { handleClose("profile") }} component={Link} to="/profile">個人資料</MenuItem>
                   <MenuItem onClick={() => { handleClose("setting") }} component={Link} to="/setting">系統設定</MenuItem>
-
-
                   <MenuItem onClick={() => { handleClose("logout") }}>登出</MenuItem>
                 </Menu>
               </div>

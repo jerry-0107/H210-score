@@ -22,28 +22,24 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import SelectSubject from '../selectSubject';
-import { AltRoute } from '@mui/icons-material';
-
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
+
 
 export function TeacherScore({ data, user, handleError }) {
   const [students, setStudents] = React.useState([
     { username: "" }
   ])
-  var idList = [0]
-  const [auth, setAuth] = React.useState(true)
+
+
   const [scoreData, setScoreData] = React.useState([
     { id: 1, [UrlParam("q")]: "null" }
   ])
   const [tbody, setTbody] = React.useState(<>Loading</>)
 
-  const [newPass, setNewPass] = React.useState()
+
   const [dialogSubmitBtnText, setDialogSubmitBtnText] = React.useState(<>更新</>)
 
   const [scoreSetting, setScoreSetting] = React.useState({ subject: "", scoreName: "", summery: "", })
@@ -130,20 +126,21 @@ export function TeacherScore({ data, user, handleError }) {
             if (res.ok) {
               setDialogSubmitBtnText("更新完畢")
               setOpen(false)
-              getAllStdPass()
-              setNewPass("")
+              getAllStdScore()
+
               setDialogSubmitBtnText("更新")
             } else {
-              getAllStdPass()
-              setNewPass("")
+              getAllStdScore()
+
               setDialogSubmitBtnText("更新失敗，請重試")
             }
 
 
           }
         ).catch((e) => {
-          getAllStdPass()
-          setNewPass("")
+          getAllStdScore()
+
+          getAllStdScore()
           setDialogSubmitBtnText("更新失敗，請重試")
         })
 
@@ -177,16 +174,16 @@ export function TeacherScore({ data, user, handleError }) {
             if (res.ok) {
               setDialogSubmitBtnText2("更新完畢")
               setOpen2(false)
-              getAllStdPass()
+              getAllStdScore()
               setDialogSubmitBtnText2("更新")
             } else {
-              getAllStdPass()
+              getAllStdScore()
               setDialogSubmitBtnText2("更新失敗，請重試")
             }
 
           }
         ).catch((e) => {
-          getAllStdPass()
+          getAllStdScore()
           setDialogSubmitBtnText2("更新失敗，請重試")
         })
 
@@ -224,7 +221,7 @@ export function TeacherScore({ data, user, handleError }) {
   }
 
 
-  function getAllStdPass() {
+  function getAllStdScore() {
     fetch("/api/getallstudentscorebyid", {
       method: 'POST',
       headers: {
@@ -240,13 +237,11 @@ export function TeacherScore({ data, user, handleError }) {
 
           setScoreData(res.data.result)
           fetch("/api/getallstudentsforscore", {
-            method: 'POST',
+            method: 'GET',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
 
-            }),
           })
             .then(res => res.json())
             .then(res => {
@@ -307,7 +302,7 @@ export function TeacherScore({ data, user, handleError }) {
   }
 
   React.useEffect(() => {
-    getAllStdPass()
+    getAllStdScore()
   }, [])
 
   React.useEffect(() => {
@@ -334,7 +329,7 @@ export function TeacherScore({ data, user, handleError }) {
       }
     } catch (e) {
       console.warn(e)
-      setTbody(<>讀取成績資料時發生錯誤，請重新輸入成績資料<br />如果是系統產生的測試資料，可以直接刪除</>)
+      setTbody(<>讀取成績資料時發生錯誤，請重新整理。<br />如果是系統產生的測試資料，可以直接刪除</>)
 
     }
 
@@ -345,7 +340,7 @@ export function TeacherScore({ data, user, handleError }) {
   return (
     <>
 
-      <TopBar needCheckLogin={true} logined={true} data={data.data} user={user} title={"成績資料"} />
+      <TopBar needCheckLogin={true} loggedIn={true} data={data.data} user={user} title={"成績資料"} />
       <Box sx={{ p: 3 }}>
 
 
@@ -357,17 +352,6 @@ export function TeacherScore({ data, user, handleError }) {
             <Typography variant="h5" component="div">
               {scoreSetting.scoreName}
             </Typography>
-
-            {/* <Typography sx={{ mb: 1.5 }} color="text.secondary" component='div'>
-              <Stack direction="row" spacing={1}>
-                {scoreSetting.subject.split(",").map((d, i) => {
-                  return (
-                    d == "" ? <></> :
-                      <Chip label={d} key={"subject" + i} size="small" color={Math.random > 0.5 ? "primary" : "info"} />
-                  )
-                })}
-              </Stack>
-            </Typography> */}
             <Typography variant="body2">
               <p>{scoreSetting.summery !== "undefined" && scoreSetting.summery ? scoreSetting.summery : "(沒有對全班的公告)"}</p>
               <p>學生與家長的查詢連結:<br />
@@ -443,7 +427,7 @@ export function TeacherScore({ data, user, handleError }) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title2">
-          {"更新標題、公告與標籤"}
+          {"更新標題與公告"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description2">
@@ -454,11 +438,6 @@ export function TeacherScore({ data, user, handleError }) {
               multiline
               rows={2}
               type='text' variant="standard" label="輸入新公告" value={newAnnousment} onInput={(e) => setNewAnnousment(e.target.value)} />
-            <p></p>
-            {/* <SelectSubject defaultValue={scoreSetting.subject.split(",")} onChangeFunc={setNewTags}
-              label={"輸入新標籤"}
-            /> */}
-
           </DialogContentText>
         </DialogContent>
         <DialogActions>

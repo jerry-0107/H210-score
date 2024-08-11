@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Link } from 'react-router-dom';
-import ReCAPTCHA from 'react-google-recaptcha';
+
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 export function Score({ data, user, handleError }) {
@@ -22,7 +22,6 @@ export function Score({ data, user, handleError }) {
 
   const [annousment, setAnnousment] = React.useState(<></>)
   const [annousmentWid, setAnnousmentWid] = React.useState(12)
-  const [isAnnousment, setIsAnnousment] = React.useState(false)
 
   const [privateTalk, setPrivateTalk] = React.useState(<></>)
   const [privateTalkWid, setPrivateTalkWid] = React.useState(12)
@@ -31,14 +30,8 @@ export function Score({ data, user, handleError }) {
   const [loadingState, setLoadingState] = React.useState("")
   const [loadingState2, setLoadingState2] = React.useState("")
 
-  const [recaptcha, setRecaptcha] = React.useState("")
   const [isrank, setIsRank] = React.useState(false)
 
-  function delay(n) {
-    return new Promise(function (resolve) {
-      setTimeout(resolve, n * 1000);
-    });
-  }
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -62,7 +55,7 @@ export function Score({ data, user, handleError }) {
     return result
   }
 
-  function getScore(id, waitsec) {
+  function getScore(id,) {
     fetch("/api/getscoremap", {
       method: 'POST',
       headers: {
@@ -80,8 +73,6 @@ export function Score({ data, user, handleError }) {
 
             if (res.data.result[i].uid == UrlParam("q")) {
               k = true
-
-
               setAnnousment(
                 res.data.result[i].summery
               )
@@ -94,7 +85,7 @@ export function Score({ data, user, handleError }) {
                   'Content-Type': 'application/json',
                 },
 
-                body: JSON.stringify({ id: UrlParam("q"), isrank: res.data.result[i].isrank > 0, countScore: true, waitsec: waitsec }),
+                body: JSON.stringify({ id: UrlParam("q"), isrank: res.data.result[i].isrank > 0, countScore: true }),
               })
                 .then(res2 => res2.json())
                 .then(res2 => {
@@ -102,15 +93,12 @@ export function Score({ data, user, handleError }) {
                     setScoreData(res2.data)
                     setLoading(false)
                   } else {
-                    console.log(res2.code)
-
                     handleError([true, res2.code])
                     setLoadingState("發生錯誤")
                     setLoadingState2(<>暫時無法查詢這筆成績<br />請過幾分鐘再試一次</>)
                   }
                 })
                 .catch(() => {
-                  console.log(res.code)
                   handleError([true, res.code])
                   setLoadingState("發生錯誤")
                   setLoadingState2(<>暫時無法查詢這筆成績<br />請過幾分鐘再試一次</>)
@@ -122,7 +110,6 @@ export function Score({ data, user, handleError }) {
             setLoadingState("發生錯誤")
             setLoadingState2("成績不存在")
 
-            // setLoading(false)
           }
         } else {
           handleError([true, 700])
@@ -130,24 +117,12 @@ export function Score({ data, user, handleError }) {
         }
 
       })
-    //  list.push({ title: res2.data.result[i].scoreName, id: res2.data.result[i].uid })
   }
 
   React.useEffect(() => {
-    function getRandom(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
-    async function _getData() {
-      if (data.data.role == "par") {
-        var waitsec = getRandom(1, 15)
-        await delay(waitsec)
-        getScore(UrlParam("q"), waitsec)
-      } else {
-        getScore(UrlParam("q"), 0)
 
-      }
-    }
-    _getData()
+    getScore(UrlParam("q"))
+
   }, [])
 
   React.useEffect(() => {
@@ -225,14 +200,9 @@ export function Score({ data, user, handleError }) {
           <CircularProgress color="inherit" />
         }
         <br />
-
       </Backdrop>
 
-
-
-      <TopBar needCheckLogin={true} logined={true} data={data.data} user={user} title={scoreTitle.title ? scoreTitle.title : "資料讀取中..."} />
-
-
+      <TopBar needCheckLogin={true} loggedIn={true} data={data.data} user={user} title={scoreTitle.title ? scoreTitle.title : "資料讀取中..."} />
 
       <Box sx={{ p: 3 }}>
         <Box sx={{ flexGrow: 1 }}>
@@ -264,25 +234,6 @@ export function Score({ data, user, handleError }) {
                 <p>{scoreData.lo}</p>
               </Item>
             </Grid>
-
-            {/* {
-              data.data.role == "std" ?
-
-                <Grid xs={6}>
-                  <Item sx={{ background: scoreData.queryTimes ? (Number(scoreData.queryTimes.split("%|%")[0]) > 0 ? blue[500] : green[600]) : blue[500], color: "#fff" }}>
-                    <h3>學生專屬功能</h3>
-                    <p>
-                      {
-                        scoreData.queryTimes == null ? <>暫時無資料</> :
-                          Number(scoreData.queryTimes.split("%|%")[0]) > 0 ? <>家長已經看過這筆成績</> : <>家長還沒看過這筆成績</>
-                      }</p>
-                    <Button variant="contained" component={Link} to={`/score/more?q=${UrlParam("q")}`} color={
-                      scoreData.queryTimes ? (Number(scoreData.queryTimes.split("%|%")[0]) > 0 ? "primary" : "success") : "primary"
-                    }>{scoreData.queryTimes == null ? "重新讀取" : "更多"}</Button>
-                  </Item>
-                </Grid>
-                : <></>
-            } */}
           </Grid>
         </Box>
       </Box>

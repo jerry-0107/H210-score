@@ -51,14 +51,6 @@ export function ParentAccounts({ data, user, handleError }) {
                 prefersDarkMode ? "dark" : "light"
     )
 
-    /*const handleInputChange = (index, value) => {
-      console.log(index, value, "000151656464")
-      var updatedValues = [...];
-      updatedValues[index] = value;
-      console.log(updatedValues[index])
-      console.log(inputValues, updatedValues)
-      (updatedValues);
-    };*/
     const [open, setOpen] = React.useState(false);
     const [openingId, setOpeningId] = React.useState(
         { username: "", userpassword: "" }
@@ -143,11 +135,11 @@ export function ParentAccounts({ data, user, handleError }) {
 
     function getAllStdPass() {
         fetch("/api/getallstudents", {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({}),
+
         })
             .then(res => res.json())
             .then(res => {
@@ -169,7 +161,7 @@ export function ParentAccounts({ data, user, handleError }) {
                         }
                     }
                     setStudents(list)
-                    console.log(students, list, idList)
+
                 } else {
                     handleError([true, 700])
                     alert("發生錯誤，請刷新網站!!")
@@ -218,7 +210,7 @@ export function ParentAccounts({ data, user, handleError }) {
                 <p></p>
                 <ReCAPTCHA
                     sitekey="6LeoWJ0oAAAAAN9LRkvYIdq3uenaZ6xENqSPLr9_"
-                    onChange={e => { console.log(e); setRecaptcha(e) }}
+                    onChange={e => { setRecaptcha(e) }}
                     theme={theme}
                 />
                 <p>
@@ -229,7 +221,7 @@ export function ParentAccounts({ data, user, handleError }) {
             </Box>
 
 
-            <TopBar needCheckLogin={true} logined={true} data={data.data} user={user} title={"家長帳密"} />
+            <TopBar needCheckLogin={true} loggedIn={true} data={data.data} user={user} title={"家長帳密"} />
 
             <Box sx={{ p: 3 }}>
                 <h1>所有家長的帳號密碼</h1>

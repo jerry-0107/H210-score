@@ -18,7 +18,7 @@ export function Setting({ data, user, handleError }) {
 
     return (
         <>
-            <TopBar needCheckLogin={true} logined={true} data={data.data} user={user} title={"系統設定"} />
+            <TopBar needCheckLogin={true} loggedIn={true} data={data.data} user={user} title={"系統設定"} />
 
             <Box sx={{ p: 3 }}>
                 <Paper sx={{ p: 2 }}>
@@ -33,7 +33,7 @@ export function Setting({ data, user, handleError }) {
                     <code>
                         成績查詢系統 v1.0
                         BY Jerry <br />
-                        2024.07<br />
+                        2024.01<br />
                         SVG Background by <Button component="a" target="_blank" href="https://bgjar.com" variant="text">BGJar</Button>
                     </code>
                 </Paper>

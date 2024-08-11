@@ -66,7 +66,6 @@ export function PushNewScore({ data, user, handleError }) {
 
 
   function localScore(type) {
-    console.log(gradeSubject)
     if (type === "get") {
       try {
         return JSON.parse(localStorage.getItem("localScore"))
@@ -100,14 +99,7 @@ export function PushNewScore({ data, user, handleError }) {
     }
     localScore("put")
   }
-  /*const handleInputChange = (index, value) => {
-    console.log(index, value, "000151656464")
-    var updatedValues = [...];
-    updatedValues[index] = value;
-    console.log(updatedValues[index])
-    console.log(inputValues, updatedValues)
-    (updatedValues);
-  };*/
+
   const handleGradeChange = (index, newValue) => {
     const newGrades = inputValues;
     newGrades[index] = newValue;
@@ -125,17 +117,7 @@ export function PushNewScore({ data, user, handleError }) {
       alert("伺服器連線測試失敗\n仍然要送出成績嗎?")
     }
     setOpen(true)
-    console.log({
-      method: m,
-      score: {
-        title: gradeTitle,
-        subject: gradeSubject ? gradeSubject : "小考",
-        annousment: annousment,
-        scoreData: inputValues,
-        summeryData: summeryValue,
-      }
 
-    })
 
     fetch("/api/uploadnewscore", {
       method: 'POST',
@@ -184,7 +166,8 @@ export function PushNewScore({ data, user, handleError }) {
 
       setConnectionStatus({ status: false, message: "連線中...", finished: false })
 
-      fetch("/api/uploadnewscore/test", {
+      //測試連線與寫入
+      fetch("/api/uploadnewscore", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -203,7 +186,7 @@ export function PushNewScore({ data, user, handleError }) {
       }).then(res => res.json())
         .then(res => {
 
-          setConnectionStatus({ status: res.ok, message: res.message, finished: false })
+          setConnectionStatus({ status: res.ok, message: !res.ok ? res.message : "測試成功，正在移除測試資料...", finished: false })
 
           fetch('/api/deletescore', {
             method: 'POST',
@@ -220,8 +203,8 @@ export function PushNewScore({ data, user, handleError }) {
                 setConnectionStatus({ status: res.ok, message: res.message, finished: true })
 
               } else {
-                setConnectionStatus({ status: res.ok, message: res.message, finished: true })
-                alert("伺服器連線測試失敗!\n請重新載入，再試一次")
+
+                window.alert("伺服器連線測試失敗!\n請重新載入，再試一次")
               }
 
             })
@@ -229,27 +212,24 @@ export function PushNewScore({ data, user, handleError }) {
               window.alert("伺服器連線測試失敗!\n請重新載入，再試一次")
             })
         })
-      // alert("系統維護中，暫時無法輸入新成績")
-      // window.location.href = "/"
+
+
       await fetch("/api/getallstudents", {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({}),
+
       })
         .then(res => res.json())
         .then(res => {
           if (res.ok) {
-            console.log(".......0", res)
             var list = []
             for (let i = 0; i < res.data.result.length; i++) {
               if (res.data.result[i].userid.includes("s")) {
                 var object = res.data.result[i]
                 object.scoreInput = <TextField type='number' inputProps={{ pattern: "[0-9]*", inputmode: "numeric" }} min="0" max="100" value={inputValues[i]} onChange={(e) => handleGradeChange(i, e.target.value)} label="輸入成績" variant="standard" />
                 object.summeryInput = <TextField value={summeryValue[i]} onChange={(e) => handleSummeryChange(i, e.target.value)} label="輸入備註" variant="standard" />
-
-                console.log(object, i, inputValues[i])
                 list.push(object)
               }
             }
@@ -289,9 +269,7 @@ export function PushNewScore({ data, user, handleError }) {
 
 
 
-      <TopBar needCheckLogin={true} logined={true} data={data.data} user={user} title={"新增成績"} />
-      <h1 style={{ color: "red" }} hidden>系統測試中，建議先不要輸入新成績</h1>
-
+      <TopBar needCheckLogin={true} loggedIn={true} data={data.data} user={user} title={"新增成績"} />
       <div>
         <Box sx={{ p: 3 }}>
           <h1>輸入新的成績資料</h1>
@@ -305,13 +283,6 @@ export function PushNewScore({ data, user, handleError }) {
             onInput={(e) => handleChange("gradeTitle", e.target.value)}
 
           />
-          <p></p>
-
-          {/* <SelectSubject defaultValue={["小考"]} onChangeFunc={handleChange} params={"gradeSubject"}
-          />
-          <Alert severity="error">為避免伺服器錯誤，請至少選擇一個標籤</Alert>
-          <p></p> */}
-
           <p></p>
           <TextField
             label="對全班的公告"

@@ -25,7 +25,7 @@ import { ErrorPage } from './pages/errorPage';
 function App() {
   const [loading, setLoading] = React.useState(true)
 
-  const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem(""));
+  const [isloggedIn, setIsloggedIn] = useState(sessionStorage.getItem(""));
   const [userData, setUserData] = useState([])
 
   const [pageError, setPageError] = React.useState([false, 0])
@@ -76,7 +76,7 @@ function App() {
         setLoading(false)
 
         if (res.loggedIn) {
-          setIsLoggedIn(res.loggedIn)
+          setIsloggedIn(res.loggedIn)
           setUserData(res.data)
         }
       })
@@ -88,7 +88,7 @@ function App() {
       {
         !pageError[0] ?
           !loading ?
-            isLoggedIn ?
+            isloggedIn ?
               <Routes>
                 <Route path='/route/to/*' element={<Routing data={userData} handleError={setPageError} />} ></Route>
 
@@ -129,7 +129,7 @@ function App() {
               </Routes>
               :
               <Routes>
-                <Route path='*' element={<LoginForm set={setIsLoggedIn} callback={handleCallBack} handleError={setPageError} />} ></Route>
+                <Route path='*' element={<LoginForm set={setIsloggedIn} callback={handleCallBack} handleError={setPageError} />} ></Route>
               </Routes>
             :
             <Backdrop

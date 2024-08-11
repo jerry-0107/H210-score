@@ -114,7 +114,7 @@ app.post('/api/login', async (req, res) => {
           return
         }
         if (results.length > 0) {
-          req.session.loggedin = true;
+          req.session.loggedIn = true;
           req.session.username = results[0].username;
           req.session.userid = results[0].userid
           req.session.role = results[0].role
@@ -581,7 +581,7 @@ app.post("/api/checklogin", async (req, res) => {
 
   res.send(JSON.stringify(
     {
-      loggedIn: req.session.loggedin,
+      loggedIn: req.session.loggedIn,
       data: {
         data: {
           userid: req.session.userid,
